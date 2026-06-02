@@ -1,0 +1,10 @@
+services:
+  jesus-huaripaucar-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: jesushuaripaucarcardenas/spring-api:latestv2
+    container_name: jesus-huaripaucar-api
+    ports:
+      - "80:80"
+    restart: unless-stopped

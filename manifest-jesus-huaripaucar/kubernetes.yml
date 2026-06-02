@@ -1,0 +1,78 @@
+# MINIKUBE FUNCIONA EN CODESPACE | LOCAL
+# KUBECTL FUNCIONA DIRECTO EN KILLERCODA (SIN MINIKUBE)
+
+# consultar versión de minikube
+minikube version
+
+# consultar si minikube esta en start o stop
+minikube status
+
+# iniciar clúster kubernetes
+minikube start
+
+# ingresar a la carpeta de los manifiestos de kubernetes (manifest)
+cd manifest-jesus-huaripaucar
+
+# listar namespace
+kubectl get namespace
+kubectl get ns
+
+# crear un namespace "jesus-huaripaucar" por comando mediante un archivo: "jesus-huaripaucar-18-namespace.yml"
+kubectl apply -f jesus-huaripaucar-18-namespace.yml
+
+# consultar namespace en uso por "default" | LINUX
+kubectl config view --minify | grep namespace
+
+# consultar namespace en uso por "default" | WINDOWS
+kubectl config view --minify | findstr namespace
+
+# cambiar un namespace en uso por "default" a "jesus-huaripaucar"
+kubectl config set-context --current --namespace=jesus-huaripaucar
+
+# aplicar secret
+kubectl apply -f jesus-huaripaucar-18-secret.yml
+
+# aplicar service
+kubectl apply -f jesus-huaripaucar-18-service.yml
+
+# aplicar deployment
+kubectl apply -f jesus-huaripaucar-18-deployment.yml
+
+# consultar todos los recursos de un namespace "jesus-huaripaucar"
+kubectl get all -n jesus-huaripaucar
+
+# consultar todos los recursos y secret de un namespace "jesus-huaripaucar"
+kubectl get all,secrets -n jesus-huaripaucar
+
+
+# listar services del namespace "jesus-huaripaucar"
+minikube service jesus-huaripaucar-service -n jesus-huaripaucar
+minikube service list
+
+
+# crear un túnel de puerto la máquina local (host) y el clúster de Kubernetes
+kubectl port-forward service/jesus-huaripaucar-service 8081:30081 -n jesus-huaripaucar
+
+
+# ============================================================
+# DEMO: ELIMINAR SECRET Y VER FALLO DEL DEPLOYMENT
+# ============================================================
+
+# 1. Verificar que todo está funcionando
+kubectl get all,secrets -n jesus-huaripaucar
+
+# 2. Eliminar el secret
+kubectl delete secret jesus-huaripaucar-secret -n jesus-huaripaucar
+
+# 3. Verificar que el secret ya no existe
+kubectl get secrets -n jesus-huaripaucar
+
+# 4. Eliminar el deployment
+kubectl delete deployment jesus-huaripaucar-deployment -n jesus-huaripaucar
+
+# 5. Recrear el deployment sin el secret (fallará)
+kubectl apply -f jesus-huaripaucar-18-deployment.yml
+
+# 6. Ver el error: CreateContainerConfigError por falta del secret
+kubectl get pods -n jesus-huaripaucar
+kubectl describe pod -n jesus-huaripaucar

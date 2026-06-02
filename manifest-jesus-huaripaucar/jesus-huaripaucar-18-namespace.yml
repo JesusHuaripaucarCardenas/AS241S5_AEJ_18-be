@@ -1,0 +1,6 @@
+# kubectl create namespace jesus-huaripaucar (COMANDO)
+# kubectl apply -f jesus-huaripaucar-18-namespace.yml (yml)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jesus-huaripaucar

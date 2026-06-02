@@ -1,0 +1,14 @@
+# kubectl apply -f jesus-huaripaucar-18-sercive.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: jesus-huaripaucar-service
+  namespace: jesus-huaripaucar
+spec:
+  type: NodePort      #30000-32767  # Cambia a LoadBalancer si estás en un entorno de nube
+  ports:
+  - port: 30081       # Puerto que el Service expondrá
+    targetPort: 8081  # Puerto en el contenedor donde tu aplicación escucha
+    nodePort: 30081   # Puerto asignado en el nodo, opcional
+  selector:
+    app: jesus-huaripaucar-deployment  # Debe coincidir con las etiquetas del Deployment

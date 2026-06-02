@@ -1,0 +1,23 @@
+# kubectl apply -f jesus-huaripaucar-18-deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jesus-huaripaucar-deployment
+  namespace: jesus-huaripaucar
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jesus-huaripaucar-deployment       
+  template:
+    metadata:
+      labels:
+        app: jesus-huaripaucar-deployment     
+    spec:
+      containers:
+      - name: jesus-huaripaucar-container
+        image: jesushuaripaucarcardenas/spring-api:latestv2
+        imagePullPolicy: Always     
+        envFrom:
+        - secretRef:
+            name: jesus-huaripaucar-secret 
