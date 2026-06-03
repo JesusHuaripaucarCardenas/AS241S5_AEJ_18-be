@@ -1,0 +1,48 @@
+name: Trivy Security Scan - Backend
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  trivy-scan:
+    name: Trivy Vulnerability Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código fuente
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Build con Maven (sin tests)
+        run: mvn clean package -DskipTests
+
+      - name: Build imagen Docker local (para escaneo)
+        run: docker build -t jesus-huaripaucar-be:scan .
+
+      - name: Ejecutar Trivy - Reporte completo
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: jesus-huaripaucar-be:scan
+          format: table
+          exit-code: '0'
+          ignore-unfixed: true
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+
+      - name: Ejecutar Trivy - Fallar si hay CRITICAL
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: jesus-huaripaucar-be:scan
+          format: table
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL'
