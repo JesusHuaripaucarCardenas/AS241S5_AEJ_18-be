@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: jesushuaripaucarcardenas/spring-api:2jun2026
+    image: jesushuaripaucarcardenas/spring-api:2jun202
     container_name: jesus-huaripaucar-api
     ports:
       - "80:80"
