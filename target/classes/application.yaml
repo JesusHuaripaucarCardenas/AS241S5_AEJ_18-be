@@ -1,0 +1,29 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: jesus.huaripaucar
+  data:
+    mongodb:
+      database: 18_jesus_huaripaucar
+      uri: mongodb+srv://jesushuaripaucar:angelo2024@cluster0.5houull.mongodb.net/?appName=Cluster0
+
+rapidapi:
+  key: 6231405a3amsh5ef3ead210821c4p1684bcjsn6d19f4528f4a
+
+  chatgpt:
+    host: free-chatgpt-api.p.rapidapi.com
+    url: https://free-chatgpt-api.p.rapidapi.com/chat-completion-one
+
+  summarizer:
+    host: article-extractor-and-summarizer.p.rapidapi.com
+    url: https://article-extractor-and-summarizer.p.rapidapi.com
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
